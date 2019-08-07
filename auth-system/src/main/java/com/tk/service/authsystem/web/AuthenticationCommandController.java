@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationCommandController {
     UserFacade userFacade;
 
+    public AuthenticationCommandController(UserFacade userFacade) {
+        this.userFacade = userFacade;
+    }
+
     @RequestMapping(value = "/register/{email}/{password}", method = RequestMethod.POST)
     public void addUser(@PathVariable("email") String email, @PathVariable("password") String password) throws UserAlreadyExistsException {//REST Endpoint.
         if (userFacade.userExists(email)) {

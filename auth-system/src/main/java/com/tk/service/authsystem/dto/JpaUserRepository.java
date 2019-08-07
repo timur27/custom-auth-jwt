@@ -2,13 +2,16 @@ package com.tk.service.authsystem.dto;
 
 import com.tk.service.authsystem.api.UserDto;
 import com.tk.service.authsystem.api.UserNotFoundException;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
+
 public class JpaUserRepository implements UserRepository {
     SpringJpaUserRepository jpaUserRepository;
+
+    public JpaUserRepository(SpringJpaUserRepository jpaUserRepository) {
+        this.jpaUserRepository = jpaUserRepository;
+    }
 
     @Override
     public void save(UserDto user) {
