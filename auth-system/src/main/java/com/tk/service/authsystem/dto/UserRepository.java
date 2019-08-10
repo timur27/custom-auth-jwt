@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserRepository {
     void save(UserDto user);
-    boolean userExists(String email);
+    boolean userExists(UserDto user);
     Optional<PersistedUser> getUserByEmail(String email) throws UserNotFoundException;
     Optional<PersistedUser> getUserById(Long id) throws UserNotFoundException;
 
