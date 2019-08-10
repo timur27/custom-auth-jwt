@@ -14,7 +14,7 @@ public class UserFacade {
         userRepository.save(user);
     }
 
-    public boolean userExists(String email) {
-        return userRepository.userExists(email);
+    public boolean userExists(UserDto user) {
+        return userRepository.userExists(user);
     }
 }

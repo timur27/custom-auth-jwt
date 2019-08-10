@@ -19,8 +19,8 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean userExists(String email) {
-        return jpaUserRepository.existsByEmail(email);
+    public boolean userExists(UserDto user) {
+        return jpaUserRepository.existsByEmail(user.getEmail());
     }
 
     @Override
