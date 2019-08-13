@@ -2,7 +2,6 @@ package com.tk.service.authsystem.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tk.service.authsystem.api.CredentialsValidationException;
 import com.tk.service.authsystem.api.UserDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,7 +36,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     user.getPassword(),
                     new ArrayList<>()
             ));
-
         } catch (IOException ex) {
             throw new RuntimeException();
         }
