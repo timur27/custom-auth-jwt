@@ -15,6 +15,7 @@
 
 	<modules>
 		<module>auth-system</module>
+		<module>api-gateway</module>
 	</modules>
 
 	<properties>
