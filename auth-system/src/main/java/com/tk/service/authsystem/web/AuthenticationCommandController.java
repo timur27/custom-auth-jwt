@@ -14,12 +14,6 @@
 //@RestController
 //public class AuthenticationCommandController {
 //    UserFacade userFacade;
-//    BCryptPasswordEncoder bCryptPasswordEncoder;
-//
-//    public AuthenticationCommandController(UserFacade userFacade, BCryptPasswordEncoder bCryptPasswordEncoder) {
-//        this.userFacade = userFacade;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-//    }
 //
 //    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity saveUser(@RequestBody UserDto user) throws UserAlreadyExistsException{
