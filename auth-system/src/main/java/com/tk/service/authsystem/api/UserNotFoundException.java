@@ -1,11 +1,12 @@
 package com.tk.service.authsystem.api;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "user not found")
-public class UserNotFoundException extends UsernameNotFoundException {
+public class UserNotFoundException extends UserPrincipalNotFoundException {
     public UserNotFoundException() {
         super("PersistedUser wasn't found");
     }
