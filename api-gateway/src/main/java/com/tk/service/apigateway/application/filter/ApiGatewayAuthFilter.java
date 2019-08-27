@@ -12,13 +12,14 @@ import java.util.Optional;
 
 public class ApiGatewayAuthFilter extends HandlerInterceptorAdapter {
     private static final String LOG_IN_PATH = "/login";
+    private static final String REGISTER_PATH = "/register";
     private static final String PRIVATE_KEY = "privateKey";
     private JWTokenHelper jwTokenHelper = JWTokenHelper.getInstance();
 //    private Logger logger = LoggerFactory.getLogger(ApiGatewayAuthFilter.class);
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
-        if (req.getRequestURI().equals(LOG_IN_PATH)) {
+        if (req.getRequestURI().equals(LOG_IN_PATH) || req.getRequestURI().equals(REGISTER_PATH)) {
             return true;
         } else {
             claimToken(req, res, handler);

@@ -6,6 +6,7 @@ import com.tk.service.authsystem.dto.UserFacade;
 import com.tk.service.authsystem.dto.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ApplicationContext {
@@ -18,5 +19,10 @@ public class ApplicationContext {
     @Bean
     public JpaUserRepository jpaUserRepository(SpringJpaUserRepository springJpaUserRepository){
         return new JpaUserRepository(springJpaUserRepository);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
