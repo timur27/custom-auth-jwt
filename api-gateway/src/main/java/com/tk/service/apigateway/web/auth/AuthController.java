@@ -21,7 +21,7 @@ public class AuthController  {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestParam("username") String username,
                                 @RequestParam("password") String password) {
-        // TOdO Create Service with RequestBuilder and POST request to auth service
+        String resultJWT = authUtil.performLoginUser(username, password);
         return ResponseEntity.ok().build();
     }
 
