@@ -1,5 +1,8 @@
 package com.tk.service.apigateway.web.auth;
 
+import com.tk.service.apigateway.util.auth.AuthUtil;
+import com.tk.service.authsystem.api.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,7 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthController  {
-    public AuthController() {}
+    AuthUtil authUtil;
+
+    @Autowired
+    public AuthController(AuthUtil authUtil) {
+        this.authUtil = authUtil;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestParam("username") String username,
@@ -17,11 +25,9 @@ public class AuthController  {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public void getTest() {
-        System.out.println("Test sout");
-        return;
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity register(@RequestParam("username") String username,
+                                   @RequestParam("password") String password) {
+        return authUtil.performRegisterRequest(new UserDto(username, password));
     }
-
-
 }
