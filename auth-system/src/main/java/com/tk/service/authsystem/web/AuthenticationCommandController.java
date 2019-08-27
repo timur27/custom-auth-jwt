@@ -3,24 +3,24 @@ package com.tk.service.authsystem.web;
 import com.tk.service.authsystem.api.UserAlreadyExistsException;
 import com.tk.service.authsystem.api.UserDto;
 import com.tk.service.authsystem.dto.UserFacade;
+import com.tk.service.authsystem.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthenticationCommandController {
     UserFacade userFacade;
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    TokenProvider tokenProvider;
 
     @Autowired
-    public AuthenticationCommandController(UserFacade userFacade, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AuthenticationCommandController(UserFacade userFacade, BCryptPasswordEncoder bCryptPasswordEncoder, TokenProvider tokenProvider) {
         this.userFacade = userFacade;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.tokenProvider = tokenProvider;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -30,6 +30,12 @@ public class AuthenticationCommandController {
         }
         persistUser(user);
         return ResponseEntity.ok().body(String.format("User with email %s sucessfully created", user.getEmail()));
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity loginUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+        String resultToken = tokenProvider.generateToken(username, password);
+        return ResponseEntity.ok(resultToken);
     }
 
     private void persistUser(UserDto user) {
