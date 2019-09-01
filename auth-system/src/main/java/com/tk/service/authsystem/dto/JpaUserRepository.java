@@ -32,4 +32,9 @@ public class JpaUserRepository implements UserRepository {
     public Optional<PersistedUser> getUserById(Long id) throws UserNotFoundException{
         return Optional.of(jpaUserRepository.getById(id)).orElseThrow(UserNotFoundException::new);
     }
+
+    @Override
+    public Optional<PersistedUser> getUserByEmailAndPassword(UserDto user) {
+        return jpaUserRepository.getByEmailAndPassword(user.getEmail(), user.getPassword());
+    }
 }

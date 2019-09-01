@@ -5,10 +5,16 @@ import com.tk.service.authsystem.api.UserDto;
 import com.tk.service.authsystem.dto.UserFacade;
 import com.tk.service.authsystem.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.xml.ws.Response;
 
 @RestController
 public class AuthenticationCommandController {
@@ -33,9 +39,13 @@ public class AuthenticationCommandController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity loginUser(@RequestParam("username") String username, @RequestParam("password") String password) {
-        String resultToken = tokenProvider.generateToken(username, password);
-        return ResponseEntity.ok(resultToken);
+    public ResponseEntity loginUser(@RequestBody UserDto user) {
+        String generatedToken = "";
+        if (userFacade.isUserValid(user)) {
+            generatedToken = tokenProvider.generateToken(user.getEmail(), user.getPassword());
+            return ResponseEntity.ok().body(generatedToken);
+        }
+        return ResponseEntity.ok().body(String.format("Provided user is invalid"));
     }
 
     private void persistUser(UserDto user) {

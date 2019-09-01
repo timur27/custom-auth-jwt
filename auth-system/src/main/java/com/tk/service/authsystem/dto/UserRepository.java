@@ -10,5 +10,6 @@ public interface UserRepository {
     boolean userExists(UserDto user);
     Optional<PersistedUser> getUserByEmail(String email) throws UserNotFoundException;
     Optional<PersistedUser> getUserById(Long id) throws UserNotFoundException;
+    Optional<PersistedUser> getUserByEmailAndPassword(UserDto user) throws UserNotFoundException;
 
 }

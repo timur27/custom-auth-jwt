@@ -8,4 +8,5 @@ public interface SpringJpaUserRepository extends JpaRepository<PersistedUser, Lo
     public boolean existsByEmail(String email);
     Optional<PersistedUser> getByEmail(String email);
     Optional<PersistedUser> getById(Long id);
+    Optional<PersistedUser> getByEmailAndPassword(String email, String password);
 }
