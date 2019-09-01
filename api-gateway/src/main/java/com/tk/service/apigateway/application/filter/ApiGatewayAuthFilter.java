@@ -28,6 +28,7 @@ public class ApiGatewayAuthFilter extends HandlerInterceptorAdapter {
     }
 
     private void claimToken(HttpServletRequest req, HttpServletResponse res, Object handler) {
+        System.out.println(req.getRequestURI());
         String privateKeyHeaderValue = Optional.of(req.getHeader(PRIVATE_KEY))
                 .orElseThrow(() -> new TokenNotProvidedException("Token was not provided"));
         try {
