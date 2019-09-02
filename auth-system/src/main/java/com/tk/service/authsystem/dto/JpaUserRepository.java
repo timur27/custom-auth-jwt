@@ -24,8 +24,8 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<PersistedUser> getUserByEmail(String email) throws UserNotFoundException {
-        return Optional.of(jpaUserRepository.getByEmail(email)).orElseThrow(UserNotFoundException::new);
+    public Optional<PersistedUser> getUserByEmail(String email) {
+        return Optional.of(jpaUserRepository.getByEmail(email)).orElse(null);
     }
 
     @Override
