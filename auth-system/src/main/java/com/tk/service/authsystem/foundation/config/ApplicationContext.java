@@ -4,6 +4,7 @@ import com.tk.service.authsystem.dto.JpaUserRepository;
 import com.tk.service.authsystem.dto.SpringJpaUserRepository;
 import com.tk.service.authsystem.dto.UserFacade;
 import com.tk.service.authsystem.dto.UserRepository;
+import com.tk.service.authsystem.security.PasswordMatcher;
 import com.tk.service.authsystem.security.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ApplicationContext {
 
     @Bean
-    UserFacade userFacade(UserRepository userRepository) {
-        return new UserFacade(userRepository);
+    UserFacade userFacade(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        return new UserFacade(userRepository, bCryptPasswordEncoder);
     }
 
     @Bean
@@ -25,5 +26,10 @@ public class ApplicationContext {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PasswordMatcher passwordMatcher(BCryptPasswordEncoder bCryptPasswordEncoder, UserFacade userFacade) {
+        return new PasswordMatcher(bCryptPasswordEncoder, userFacade);
     }
 }

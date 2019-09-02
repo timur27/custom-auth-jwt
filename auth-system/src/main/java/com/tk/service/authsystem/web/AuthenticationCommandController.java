@@ -3,8 +3,11 @@ package com.tk.service.authsystem.web;
 import com.tk.service.authsystem.api.UserAlreadyExistsException;
 import com.tk.service.authsystem.api.UserDto;
 import com.tk.service.authsystem.dto.UserFacade;
+import com.tk.service.authsystem.security.PasswordMatcher;
 import com.tk.service.authsystem.security.TokenProvider;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +24,14 @@ public class AuthenticationCommandController {
     UserFacade userFacade;
     BCryptPasswordEncoder bCryptPasswordEncoder;
     TokenProvider tokenProvider;
+    PasswordMatcher passwordMatcher;
 
     @Autowired
-    public AuthenticationCommandController(UserFacade userFacade, BCryptPasswordEncoder bCryptPasswordEncoder, TokenProvider tokenProvider) {
+    public AuthenticationCommandController(UserFacade userFacade, BCryptPasswordEncoder bCryptPasswordEncoder, TokenProvider tokenProvider, PasswordMatcher passwordMatcher) {
         this.userFacade = userFacade;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.tokenProvider = tokenProvider;
+        this.passwordMatcher = passwordMatcher;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -39,13 +44,12 @@ public class AuthenticationCommandController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity loginUser(@RequestBody UserDto user) {
-        String generatedToken = "";
-        if (userFacade.isUserValid(user)) {
+    public ResponseEntity<String> loginUser(@RequestBody UserDto user) {
+        String generatedToken = Strings.EMPTY;
+        if (passwordMatcher.isPasswordValid(user.getEmail(), user.getPassword())) {
             generatedToken = tokenProvider.generateToken(user.getEmail(), user.getPassword());
-            return ResponseEntity.ok().body(generatedToken);
         }
-        return ResponseEntity.ok().body(String.format("Provided user is invalid"));
+        return ResponseEntity.ok(generatedToken);
     }
 
     private void persistUser(UserDto user) {

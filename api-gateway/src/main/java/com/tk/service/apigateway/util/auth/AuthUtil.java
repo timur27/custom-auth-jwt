@@ -2,6 +2,7 @@ package com.tk.service.apigateway.util.auth;
 
 import com.tk.service.authsystem.api.UserDto;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,11 +17,18 @@ public class AuthUtil {
         return response;
     }
 
-    public ResponseEntity performLoginUser(UserDto user) {
+    public String performLoginUser(UserDto user) {
         RestTemplate restTemplate = new RestTemplate();
+
         String loginUrl = "http://localhost:8080/login";
         HttpEntity<UserDto> userEntity = new HttpEntity<>(user);
-        ResponseEntity<String> response = restTemplate.postForEntity(loginUrl, userEntity, String.class);
-        return response;
+        return translateLoginResponse(restTemplate.exchange(loginUrl, HttpMethod.POST, userEntity, String.class));
     }
+
+
+    private String translateLoginResponse(ResponseEntity<String> res) {
+        return res.getHeaders().getContentLength() == 0L ? String.format("Provided user data is invalid") : res.getBody();
+    }
+
+
 }
