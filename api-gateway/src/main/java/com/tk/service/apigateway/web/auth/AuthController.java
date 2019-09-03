@@ -22,6 +22,7 @@ public class AuthController  {
     public ResponseEntity login(@RequestParam("username") String username,
                                 @RequestParam("password") String password) {
         String result = authUtil.performLoginUser(new UserDto(username, password));
+        authUtil.persistToken(result);
         return ResponseEntity.ok().build();
     }
 
