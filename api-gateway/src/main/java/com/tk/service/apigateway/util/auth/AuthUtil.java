@@ -9,6 +9,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AuthUtil {
+    public static final String USER_INVALID = "Provided user data is invalid";
+
+
     public ResponseEntity performRegisterRequest(UserDto user) {
         RestTemplate restTemplate = new RestTemplate();
         String registerUrl = "http://localhost:8080/register";
@@ -25,10 +28,14 @@ public class AuthUtil {
         return translateLoginResponse(restTemplate.exchange(loginUrl, HttpMethod.POST, userEntity, String.class));
     }
 
-
-    private String translateLoginResponse(ResponseEntity<String> res) {
-        return res.getHeaders().getContentLength() == 0L ? String.format("Provided user data is invalid") : res.getBody();
+    public void persistToken(String authServiceResponse) {
+        if (!authServiceResponse.equals(USER_INVALID)) {
+            // TODO Add persistence layer for received token
+            return;
+        }
     }
 
-
+    private String translateLoginResponse(ResponseEntity<String> res) {
+        return res.getHeaders().getContentLength() == 0L ? USER_INVALID : res.getBody();
+    }
 }
