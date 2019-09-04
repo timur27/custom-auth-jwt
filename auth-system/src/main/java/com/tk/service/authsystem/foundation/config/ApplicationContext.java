@@ -28,6 +28,7 @@ public class ApplicationContext {
     }
 
     @Bean
+    @Profile({"test", "dev"})
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
