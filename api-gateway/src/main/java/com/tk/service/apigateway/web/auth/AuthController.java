@@ -1,7 +1,7 @@
 package com.tk.service.apigateway.web.auth;
 
+import com.tk.service.apigateway.api.UserDto;
 import com.tk.service.apigateway.util.auth.AuthUtil;
-import com.tk.service.authsystem.api.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

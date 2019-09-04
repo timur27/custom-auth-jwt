@@ -1,7 +1,7 @@
 package com.tk.service.apigateway.util.auth;
 
+import com.tk.service.apigateway.api.UserDto;
 import com.tk.service.apigateway.application.WorkflowHttpUrls;
-import com.tk.service.authsystem.api.UserDto;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
