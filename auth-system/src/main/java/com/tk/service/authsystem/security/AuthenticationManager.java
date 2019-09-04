@@ -37,6 +37,8 @@ public class AuthenticationManager {
     public ResponseEntity loginUser(UserDto user) {
         if (passwordMatcher.isPasswordValid(user.getEmail(), user.getPassword())) {
             setResponseBody(tokenProvider.generateToken(user.getEmail(), user.getPassword()));
+        } else {
+            setResponseBody("Provided user data is invalid");
         }
         return ResponseEntity.ok(getResponseBody());
     }

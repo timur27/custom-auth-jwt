@@ -4,6 +4,7 @@ import com.tk.service.authsystem.dto.*;
 import com.tk.service.authsystem.security.PasswordMatcher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -15,11 +16,19 @@ public class ApplicationContext {
     }
 
     @Bean
+    @Profile("dev")
     public JpaUserRepository jpaUserRepository(SpringJpaUserRepository springJpaUserRepository){
         return new JpaUserRepository(springJpaUserRepository);
     }
 
     @Bean
+    @Profile("test")
+    public TestUserRepository testUserRepository(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        return new TestUserRepository(bCryptPasswordEncoder);
+    }
+
+    @Bean
+    @Profile({"test", "dev"})
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }

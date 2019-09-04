@@ -20,8 +20,8 @@ public class AuthUtil {
     }
 
     private ResponseEntity<String> translateLoginResponse(ResponseEntity<String> res) {
-        return res.getHeaders().getContentLength() == 0L ? ResponseEntity.ok(USER_INVALID)
-                                                         : ResponseEntity.ok(String.format("access_token: %s", res.getBody()));
+        return res.getHeaders().getContentLength() == USER_INVALID.length() ? ResponseEntity.ok(USER_INVALID)
+                                                                            : ResponseEntity.ok(String.format("access_token: %s", res.getBody()));
     }
 
     private ResponseEntity<String> buildAndSendRequest(UserDto user, String url) {
