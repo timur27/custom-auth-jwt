@@ -21,9 +21,7 @@ public class AuthController  {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestParam("username") String username,
                                 @RequestParam("password") String password) {
-        String result = authUtil.performLoginUser(new UserDto(username, password));
-        authUtil.persistToken(result);
-        return ResponseEntity.ok().build();
+        return authUtil.performLoginUser(new UserDto(username, password));
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
