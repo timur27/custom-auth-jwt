@@ -1,9 +1,7 @@
 package com.tk.service.authsystem.security;
 
-import com.tk.service.authsystem.api.UserDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -15,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class TokenProvider {
     private static final long EXPIRATION_LIMIT = 30;
-    public static final String SECRET_KEY = "tktktktk";
+    private static final String SECRET_KEY = "tktktktk";
 
     public String generateToken(String username, String password) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;

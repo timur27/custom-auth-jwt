@@ -1,11 +1,7 @@
 package com.tk.service.authsystem.foundation.config;
 
-import com.tk.service.authsystem.dto.JpaUserRepository;
-import com.tk.service.authsystem.dto.SpringJpaUserRepository;
-import com.tk.service.authsystem.dto.UserFacade;
-import com.tk.service.authsystem.dto.UserRepository;
+import com.tk.service.authsystem.dto.*;
 import com.tk.service.authsystem.security.PasswordMatcher;
-import com.tk.service.authsystem.security.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
