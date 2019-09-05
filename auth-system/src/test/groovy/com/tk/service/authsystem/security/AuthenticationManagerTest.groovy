@@ -48,7 +48,7 @@ class AuthenticationManagerTest extends Specification{
         MvcResult result = performPostRequest(REGISTER, objectMapper.writeValueAsString(user))
 
         then:
-        result.getResponse().getContentAsString() == "User with provided data already exist"
+        result.getResponse().getStatus() == HttpStatus.CONFLICT.value()
     }
 
     def "Should correctly log in registered user and return JWT in response" () {
@@ -72,7 +72,7 @@ class AuthenticationManagerTest extends Specification{
         MvcResult result = performPostRequest(LOGIN, objectMapper.writeValueAsString(user))
 
         then: "There is a response with invalid data msg"
-        result.getResponse().getContentAsString() == "Provided user data is invalid"
+        result.getResponse().getStatus() == HttpStatus.BAD_REQUEST.value()
     }
 
     private MvcResult performPostRequest(String url, String userString) {

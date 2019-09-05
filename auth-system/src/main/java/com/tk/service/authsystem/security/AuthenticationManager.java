@@ -2,8 +2,9 @@ package com.tk.service.authsystem.security;
 
 import com.tk.service.authsystem.api.UserDto;
 import com.tk.service.authsystem.dto.UserFacade;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,6 @@ public class AuthenticationManager {
     private PasswordMatcher passwordMatcher;
     private TokenProvider tokenProvider;
     private UserFacade userFacade;
-    private String responseBody;
 
     @Autowired
     public AuthenticationManager(BCryptPasswordEncoder bCryptPasswordEncoder, PasswordMatcher passwordMatcher, TokenProvider tokenProvider, UserFacade userFacade) {
@@ -24,33 +24,19 @@ public class AuthenticationManager {
         this.userFacade = userFacade;
     }
 
-    public ResponseEntity registerUser(UserDto user) {
+    public ResponseEntity<String> registerUser(UserDto user) {
         if (userFacade.userExists(user)) {
-            setResponseBody("User with provided data already exist");
-        } else {
-            persistUser(user);
-            setResponseBody("User successfully created");
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        return ResponseEntity.ok().body(getResponseBody());
+        persistUser(user);
+        return ResponseEntity.ok().body("User successfully created");
     }
 
     public ResponseEntity loginUser(UserDto user) {
-        if (passwordMatcher.isPasswordValid(user.getEmail(), user.getPassword())) {
-            setResponseBody(tokenProvider.generateToken(user.getEmail(), user.getPassword()));
-        } else {
-            setResponseBody("Provided user data is invalid");
+        if (!passwordMatcher.isPasswordValid(user.getEmail(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(getResponseBody());
-    }
-
-    private String getResponseBody() {
-        String tmpResponse = this.responseBody;
-        this.responseBody = Strings.EMPTY;
-        return tmpResponse;
-    }
-
-    private void setResponseBody(String responseBody) {
-        this.responseBody = responseBody;
+        return ResponseEntity.ok(tokenProvider.generateToken(user.getEmail(), user.getPassword()));
     }
 
     private void persistUser(UserDto user) {

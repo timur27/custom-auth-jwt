@@ -2,6 +2,9 @@ package com.tk.service.apigateway.util.auth;
 
 import com.tk.service.apigateway.api.UserDto;
 import com.tk.service.apigateway.application.WorkflowHttpUrls;
+import com.tk.service.apigateway.ex.ErrorResponse;
+import com.tk.service.apigateway.ex.ResponseEntityErrorException;
+import com.tk.service.apigateway.ex.ResponseEntityErrorHandler;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,22 +14,27 @@ import org.springframework.web.client.RestTemplate;
 public class AuthUtil {
     private static final String USER_INVALID = "Provided user data is invalid";
 
-    public ResponseEntity<String> performRegisterRequest(UserDto user) {
+    public ResponseEntity performRegisterRequest(UserDto user) {
         return buildAndSendRequest(user, WorkflowHttpUrls.REGISTER);
     }
 
-    public ResponseEntity<String> performLoginUser(UserDto user) {
-        return translateLoginResponse(buildAndSendRequest(user, WorkflowHttpUrls.LOGIN));
+    public ResponseEntity performLoginUser(UserDto user) {
+        return buildAndSendRequest(user, WorkflowHttpUrls.LOGIN);
     }
 
-    private ResponseEntity<String> translateLoginResponse(ResponseEntity<String> res) {
-        return res.getHeaders().getContentLength() == USER_INVALID.length() ? ResponseEntity.ok(USER_INVALID)
-                                                                            : ResponseEntity.ok(String.format("access_token: %s", res.getBody()));
-    }
-
-    private ResponseEntity<String> buildAndSendRequest(UserDto user, String url) {
+    private ResponseEntity buildAndSendRequest(UserDto user, String url) {
         RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntityErrorHandler errorHandler = new ResponseEntityErrorHandler();
+        errorHandler.setMessageConverters(restTemplate.getMessageConverters());
+        restTemplate.setErrorHandler(errorHandler);
+
         HttpEntity<UserDto> userEntity = new HttpEntity<>(user);
-        return restTemplate.postForEntity(url, userEntity, String.class);
+        try {
+            return restTemplate.postForEntity(url, userEntity, String.class);
+        } catch (ResponseEntityErrorException ex) {
+            ResponseEntity<ErrorResponse> errorResponse = ex.getErrorResponse();
+            return errorResponse;
+        }
     }
 }
