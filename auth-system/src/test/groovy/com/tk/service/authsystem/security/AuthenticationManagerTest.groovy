@@ -2,6 +2,7 @@ package com.tk.service.authsystem.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tk.service.authsystem.api.UserDto
+import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -35,7 +36,12 @@ class AuthenticationManagerTest extends Specification{
         MvcResult result = performPostRequest(REGISTER, objectMapper.writeValueAsString(user))
 
         then: "User is successfully created"
-        result.getResponse().getContentAsString() == "User successfully created"
+        mapResponseToJson(result.getResponse().getContentAsString()).equals("User successfully created")
+    }
+
+    private String mapResponseToJson(String responseJSON) {
+        JSONObject jsonObject = new JSONObject(responseJSON)
+        return jsonObject.getString("msg")
     }
 
     def "Should avoid user registering with invalid data"() {

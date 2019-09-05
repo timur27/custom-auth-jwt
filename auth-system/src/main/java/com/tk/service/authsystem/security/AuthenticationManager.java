@@ -30,7 +30,7 @@ public class AuthenticationManager {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         persistUser(user);
-        return ResponseEntity.ok(new Response("User succesfully created"));
+        return ResponseEntity.ok(new Response("User successfully created"));
     }
 
     public ResponseEntity<Response> loginUser(UserDto user) {
