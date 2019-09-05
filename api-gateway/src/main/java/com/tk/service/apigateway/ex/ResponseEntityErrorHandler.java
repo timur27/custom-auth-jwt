@@ -1,6 +1,5 @@
 package com.tk.service.apigateway.ex;
 
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
@@ -9,7 +8,6 @@ import org.springframework.web.client.ResponseErrorHandler;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public class ResponseEntityErrorHandler implements ResponseErrorHandler {
     private List<HttpMessageConverter<?>> messageConverters;
@@ -21,13 +19,15 @@ public class ResponseEntityErrorHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
-        String errorMsg = Strings.EMPTY;
+        ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.noContent().build();
+        String errorMsg;
         if (clientHttpResponse.getRawStatusCode() == HttpStatus.CONFLICT.value()) {
             errorMsg = "User with provided data already exist";
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(errorMsg));
         } else if (clientHttpResponse.getRawStatusCode() == HttpStatus.BAD_REQUEST.value()) {
             errorMsg = "Provided user data in invalid";
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMsg));
         }
-        ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.of(Optional.of(new ErrorResponse(errorMsg, clientHttpResponse.getRawStatusCode())));
         throw new ResponseEntityErrorException(responseEntity);
     }
 

@@ -2,11 +2,9 @@ package com.tk.service.apigateway.ex;
 
 public class ErrorResponse {
     private String msg;
-    private int statusCode;
 
-    public ErrorResponse(String msg, int statusCode) {
+    public ErrorResponse(String msg) {
         this.msg = msg;
-        this.statusCode = statusCode;
     }
 
 
@@ -16,13 +14,5 @@ public class ErrorResponse {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
     }
 }

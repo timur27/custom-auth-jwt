@@ -3,6 +3,7 @@ package com.tk.service.apigateway.web.auth;
 import com.tk.service.apigateway.api.UserDto;
 import com.tk.service.apigateway.util.auth.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,13 +19,13 @@ public class AuthController  {
         this.authUtil = authUtil;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity login(@RequestParam("username") String username,
                                 @RequestParam("password") String password) {
         return authUtil.performLoginUser(new UserDto(username, password));
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity register(@RequestParam("username") String username,
                                    @RequestParam("password") String password) {
         return authUtil.performRegisterRequest(new UserDto(username, password));

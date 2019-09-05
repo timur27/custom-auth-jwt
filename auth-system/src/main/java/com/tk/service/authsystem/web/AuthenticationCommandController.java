@@ -19,12 +19,14 @@ public class AuthenticationCommandController {
         this.authenticationManager = authenticationManager;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE
+                                                                    , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity saveUser(@RequestBody UserDto user) {
         return authenticationManager.registerUser(user);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE
+                                                                 , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity loginUser(@RequestBody UserDto user) {
         return authenticationManager.loginUser(user);
     }

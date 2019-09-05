@@ -30,14 +30,14 @@ public class AuthenticationManager {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         persistUser(user);
-        return ResponseEntity.ok(new Response("User succesfully created", HttpStatus.OK.value()));
+        return ResponseEntity.ok(new Response("User succesfully created"));
     }
 
     public ResponseEntity<Response> loginUser(UserDto user) {
         if (!passwordMatcher.isPasswordValid(user.getEmail(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(new Response(tokenProvider.generateToken(user.getEmail(), user.getPassword()), HttpStatus.OK.value()));
+        return ResponseEntity.ok(new Response(tokenProvider.generateToken(user.getEmail(), user.getPassword())));
     }
 
     private void persistUser(UserDto user) {
