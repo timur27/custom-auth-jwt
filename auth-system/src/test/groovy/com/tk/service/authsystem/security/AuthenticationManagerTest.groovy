@@ -30,18 +30,13 @@ class AuthenticationManagerTest extends Specification{
     def "Should register user, if user not existed before" () {
         given: "User to save"
         UserDto user = produceUser("test_user@gmail.com", "test_password");
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper()
 
         when: "Perform POST request to service"
         MvcResult result = performPostRequest(REGISTER, objectMapper.writeValueAsString(user))
 
         then: "User is successfully created"
         mapResponseToJson(result.getResponse().getContentAsString()).equals("User successfully created")
-    }
-
-    private String mapResponseToJson(String responseJSON) {
-        JSONObject jsonObject = new JSONObject(responseJSON)
-        return jsonObject.getString("msg")
     }
 
     def "Should avoid user registering with invalid data"() {
@@ -85,10 +80,15 @@ class AuthenticationManagerTest extends Specification{
         return mockMvc.perform(post(url)
                       .contentType(MediaType.APPLICATION_JSON)
                       .content(userString))
-                      .andReturn();
+                      .andReturn()
     }
 
     private UserDto produceUser(String email, String password) {
-        return new UserDto(email, password);
+        return new UserDto(email, password)
+    }
+
+    private String mapResponseToJson(String responseJSON) {
+        JSONObject jsonObject = new JSONObject(responseJSON)
+        return jsonObject.getString("msg")
     }
 }
