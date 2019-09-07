@@ -1,15 +1,27 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
-import {Observable} from "rxjs";
+import {AuthService} from "./auth.service";
+import {Component, Injectable, OnInit} from "@angular/core";
+import {FormGroup} from "@angular/forms";
 
 
 
-const API_URL = environment.apiUrl;
+@Component({
+  selector: 'auth-service',
+  templateUrl: './auth.component.html'
+})
+export class AuthComponent implements OnInit{
+    authForm: FormGroup
 
-@Injectable()
-export class AuthService{
-    constructor(private http: HttpClient){}
 
-    //TODO Write posts to server for register
+
+    constructor(private authenticationService: AuthService){
+      this.authService = authenticationService;
+    }
+
+
+    public registerUser(email: any, password: any) {
+      this.authService.registerUser(email, password);
+    }
+
+  ngOnInit(): void {
+  }
 }

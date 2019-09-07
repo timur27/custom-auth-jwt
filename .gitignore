@@ -29,3 +29,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### UI ###
+ui/e2e
+ui/.editorconfig
+ui/angular.json
+ui/browserslist
+ui/karma.conf.js
+ui/tsconfig.spec.json
+ui/tsconfig.app.json
+ui/tslint.json
+ui/src/assets
