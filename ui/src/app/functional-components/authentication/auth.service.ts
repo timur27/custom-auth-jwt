@@ -13,11 +13,19 @@ export class AuthService {
     constructor(private http: HttpClient) {
     }
 
-    public registerUser(user: User): Observable<any> {
+    public registerUser(email: string, password: string): Observable<any> {
+        return this.http.post<any>(url + UrlConstantsComponent.REGISTER, {email, password}, this.getHeaders());
+    }
+
+    public loginUser(email: string, password: string): Observable<any> {
+       return this.http.post<any>(url + UrlConstantsComponent.LOGIN, {email, password}, this.getHeaders());
+    }
+
+    private getHeaders() {
         let httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
         let options ={
-          headers: httpHeaders
+            headers: httpHeaders
         };
-        return this.http.post<User>(url + UrlConstantsComponent.REGISTER, user, options);
+        return options;
     }
 }
