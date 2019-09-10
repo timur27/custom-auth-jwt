@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit{
     get f() { return this.loginForm.controls; }
 
     onSubmit() {
+      debugger;
         this.submitted = true;
-
         this.authService.loginUser(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
             .subscribe(res => {
                 console.log(res);
