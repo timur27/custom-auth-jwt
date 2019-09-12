@@ -15,19 +15,22 @@ export class LoginComponent implements OnInit{
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            email: ['', Validators.required],
-            password: ['', Validators.required]
+            username: [''],
+            password: ['']
         });
     }
 
     get f() { return this.loginForm.controls; }
 
     onSubmit() {
-      debugger;
-        this.submitted = true;
-        this.authService.loginUser(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
-            .subscribe(res => {
-                console.log(res);
-            })
+      const formData = new FormData();
+      formData.append('username', this.loginForm.get('username').value);
+      formData.append('password', this.loginForm.get('password').value);
+
+      this.submitted = true;
+      this.authService.loginUser(formData)
+          .subscribe(res => {
+              console.log(res);
+          })
     }
 }

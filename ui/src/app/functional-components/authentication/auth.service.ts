@@ -17,8 +17,8 @@ export class AuthService {
         return this.http.post<any>(url + UrlConstantsComponent.REGISTER, {email, password}, this.getHeaders());
     }
 
-    public loginUser(email: string, password: string): Observable<any> {
-       return this.http.post<any>(url + UrlConstantsComponent.LOGIN, {email, password}, this.getHeaders());
+    public loginUser(formData: FormData): Observable<any> {
+       return this.http.post<any>(url + UrlConstantsComponent.LOGIN, formData, this.getHeaders());
     }
 
     private getHeaders() {
