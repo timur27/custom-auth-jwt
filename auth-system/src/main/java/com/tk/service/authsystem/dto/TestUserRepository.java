@@ -20,20 +20,20 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public void save(UserDto user) {
-        if (!userMap.containsKey(user.getEmail())) {
-            userMap.put(user.getEmail(), bCryptPasswordEncoder.encode(user.getPassword()));
+        if (!userMap.containsKey(user.getUsername())) {
+            userMap.put(user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()));
         }
     }
 
     @Override
     public boolean userExists(UserDto user) {
-        return userMap.containsKey(user.getEmail());
+        return userMap.containsKey(user.getUsername());
     }
 
     @Override
-    public Optional<PersistedUser> getUserByEmail(String email) {
-        if (userMap.containsKey(email)) {
-            return Optional.of(UserWrapper.from(new UserDto(email, userMap.get(email))));
+    public Optional<PersistedUser> getUserByUsername(String username) {
+        if (userMap.containsKey(username)) {
+            return Optional.of(UserWrapper.from(new UserDto(username, userMap.get(username))));
         }
         return Optional.empty();
     }
@@ -44,7 +44,7 @@ public class TestUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<PersistedUser> getUserByEmailAndPassword(UserDto user) throws UserNotFoundException {
-        return getUserByEmail(user.getEmail());
+    public Optional<PersistedUser> getUserByUsernameAndPassword(UserDto user) throws UserNotFoundException {
+        return getUserByUsername(user.getUsername());
     }
 }

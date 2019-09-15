@@ -34,10 +34,10 @@ public class AuthenticationManager {
     }
 
     public ResponseEntity<Response> loginUser(UserDto user) {
-        if (!passwordMatcher.isPasswordValid(user.getEmail(), user.getPassword())) {
+        if (!passwordMatcher.isPasswordValid(user.getUsername(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(new Response(tokenProvider.generateToken(user.getEmail(), user.getPassword())));
+        return ResponseEntity.ok(new Response(tokenProvider.generateToken(user.getUsername(), user.getPassword())));
     }
 
     private void persistUser(UserDto user) {

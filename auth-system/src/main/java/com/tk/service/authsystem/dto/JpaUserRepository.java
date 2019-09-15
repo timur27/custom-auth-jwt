@@ -20,12 +20,12 @@ public class JpaUserRepository implements UserRepository {
 
     @Override
     public boolean userExists(UserDto user) {
-        return jpaUserRepository.existsByEmail(user.getEmail());
+        return jpaUserRepository.existsByUsername(user.getUsername());
     }
 
     @Override
-    public Optional<PersistedUser> getUserByEmail(String email) {
-        return Optional.of(jpaUserRepository.getByEmail(email)).orElse(null);
+    public Optional<PersistedUser> getUserByUsername(String username) {
+        return Optional.of(jpaUserRepository.getByUsername(username)).orElse(null);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<PersistedUser> getUserByEmailAndPassword(UserDto user) {
-        return jpaUserRepository.getByEmailAndPassword(user.getEmail(), user.getPassword());
+    public Optional<PersistedUser> getUserByUsernameAndPassword(UserDto user) {
+        return jpaUserRepository.getByUsernameAndPassword(user.getUsername(), user.getPassword());
     }
 }

@@ -14,7 +14,7 @@ public class PasswordMatcher {
         this.userFacade = userFacade;
     }
 
-    public boolean isPasswordValid(String email, String pass) {
-        return userFacade.getUser(email).filter(user -> bCryptPasswordEncoder.matches(pass, user.getPassword())).isPresent();
+    public boolean isPasswordValid(String username, String pass) {
+        return userFacade.getUser(username).filter(user -> bCryptPasswordEncoder.matches(pass, user.getPassword())).isPresent();
     }
 }

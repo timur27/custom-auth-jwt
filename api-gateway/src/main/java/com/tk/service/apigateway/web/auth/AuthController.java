@@ -18,15 +18,13 @@ public class AuthController  {
 
     @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity login(@RequestParam("username") String username,
-                                @RequestParam("password") String password) {
-        return authUtil.performLoginUser(new UserDto(username, password));
+    public ResponseEntity login(@RequestBody UserDto user) {
+        return authUtil.performLoginUser(user);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity register(@RequestParam("username") String username,
-                                   @RequestParam("password") String password) {
-        return authUtil.performRegisterRequest(new UserDto(username, password));
+    public ResponseEntity register(@RequestBody UserDto user) {
+        return authUtil.performRegisterRequest(user);
     }
 }
