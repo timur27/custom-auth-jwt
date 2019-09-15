@@ -13,12 +13,12 @@ export class AuthService {
     constructor(private http: HttpClient) {
     }
 
-    public registerUser(email: string, password: string): Observable<any> {
-        return this.http.post<any>(url + UrlConstantsComponent.REGISTER, {email, password}, this.getHeaders());
+    public registerUser(username: string, password: string): Observable<any> {
+        return this.http.post<any>(url + UrlConstantsComponent.REGISTER, {username, password}, this.getHeaders());
     }
 
-    public loginUser(formData: FormData): Observable<any> {
-       return this.http.post<any>(url + UrlConstantsComponent.LOGIN, formData, this.getHeaders());
+    public loginUser(username: String, password: String): Observable<any> {
+       return this.http.post<any>(url + UrlConstantsComponent.LOGIN, JSON.stringify({username, password}), this.getHeaders());
     }
 
     private getHeaders() {
