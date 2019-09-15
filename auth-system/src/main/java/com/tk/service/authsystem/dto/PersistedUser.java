@@ -17,14 +17,14 @@ public class PersistedUser {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "EMAIL")
-    private String email;
+    @Column(name = "USER_NAME")
+    private String username;
 
     @Column(name = "PASSWORD")
     private String password;
 
-    public PersistedUser(String email, String password) {
-        this.email = email;
+    public PersistedUser(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 }

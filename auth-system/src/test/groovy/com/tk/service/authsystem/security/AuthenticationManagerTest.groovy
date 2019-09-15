@@ -83,8 +83,8 @@ class AuthenticationManagerTest extends Specification{
                       .andReturn()
     }
 
-    private UserDto produceUser(String email, String password) {
-        return new UserDto(email, password)
+    private UserDto produceUser(String username, String password) {
+        return new UserDto(username, password)
     }
 
     private String mapResponseToJson(String responseJSON) {

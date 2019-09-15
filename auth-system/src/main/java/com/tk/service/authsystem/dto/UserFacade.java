@@ -25,8 +25,8 @@ public class UserFacade {
         return userRepository.userExists(user);
     }
 
-    public Optional<PersistedUser> getUser(String email) {
-        return userRepository.getUserByEmail(email);
+    public Optional<PersistedUser> getUser(String username) {
+        return userRepository.getUserByUsername(username);
     }
 
 }
