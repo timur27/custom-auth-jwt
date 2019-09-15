@@ -23,10 +23,6 @@ export class LoginComponent implements OnInit{
     get f() { return this.loginForm.controls; }
 
     onSubmit() {
-      const formData = new FormData();
-      formData.append('username', this.loginForm.get('username').value);
-      formData.append('password', this.loginForm.get('password').value);
-
       this.submitted = true;
       this.authService.loginUser(this.loginForm.get('username').value, this.loginForm.get('password').value)
           .subscribe(res => {
