@@ -36,7 +36,7 @@ class AuthenticationManagerTest extends Specification{
         MvcResult result = performPostRequest(REGISTER, objectMapper.writeValueAsString(user))
 
         then: "User is successfully created"
-        mapResponseToJson(result.getResponse().getContentAsString()).equals("User successfully created")
+        result.getResponse().getContentAsString() == "User successfully created"
     }
 
     def "Should avoid user registering with invalid data"() {
@@ -85,10 +85,5 @@ class AuthenticationManagerTest extends Specification{
 
     private UserDto produceUser(String username, String password) {
         return new UserDto(username, password)
-    }
-
-    private String mapResponseToJson(String responseJSON) {
-        JSONObject jsonObject = new JSONObject(responseJSON)
-        return jsonObject.getString("msg")
     }
 }

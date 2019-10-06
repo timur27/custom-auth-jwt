@@ -24,7 +24,7 @@ public class AuthController  {
 
     @CrossOrigin
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity register(@RequestBody UserDto user) {
+    public ResponseEntity<String> register(@RequestBody UserDto user) {
         return authUtil.performRegisterRequest(user);
     }
 }
