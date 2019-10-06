@@ -4,7 +4,6 @@ import com.tk.service.authsystem.api.UserDto;
 import com.tk.service.authsystem.dto.Response;
 import com.tk.service.authsystem.dto.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,19 +24,19 @@ public class AuthenticationManager {
         this.userFacade = userFacade;
     }
 
-    public ResponseEntity<Response> registerUser(UserDto user) {
+    public ResponseEntity<String> registerUser(UserDto user) {
         if (userFacade.userExists(user)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         persistUser(user);
-        return ResponseEntity.ok(new Response("User successfully created"));
+        return ResponseEntity.ok("User successfully created");
     }
 
-    public ResponseEntity<Response> loginUser(UserDto user) {
+    public ResponseEntity<String> loginUser(UserDto user) {
         if (!passwordMatcher.isPasswordValid(user.getUsername(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(new Response(tokenProvider.generateToken(user.getUsername(), user.getPassword())));
+        return ResponseEntity.ok(tokenProvider.generateToken(user.getUsername(), user.getPassword()));
     }
 
     private void persistUser(UserDto user) {

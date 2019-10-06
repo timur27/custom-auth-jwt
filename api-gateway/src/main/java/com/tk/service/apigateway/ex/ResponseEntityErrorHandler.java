@@ -19,14 +19,14 @@ public class ResponseEntityErrorHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
-        ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.noContent().build();
+        ResponseEntity<String> responseEntity = ResponseEntity.noContent().build();
         String errorMsg;
         if (clientHttpResponse.getRawStatusCode() == HttpStatus.CONFLICT.value()) {
             errorMsg = "User with provided data already exist";
-            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(errorMsg));
+            responseEntity = ResponseEntity.status(HttpStatus.CONFLICT).body(errorMsg);
         } else if (clientHttpResponse.getRawStatusCode() == HttpStatus.BAD_REQUEST.value()) {
             errorMsg = "Provided user data in invalid";
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMsg));
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg);
         }
         throw new ResponseEntityErrorException(responseEntity);
     }
