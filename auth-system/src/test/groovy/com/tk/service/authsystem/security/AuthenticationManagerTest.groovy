@@ -2,7 +2,6 @@ package com.tk.service.authsystem.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tk.service.authsystem.api.UserDto
-import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -63,7 +62,7 @@ class AuthenticationManagerTest extends Specification{
 
         then: "User is successfully authenticated and JWT is returned"
         result.getResponse().getStatus() == HttpStatus.OK.value()
-        result.getResponse().getContentAsString().split("\\.").length == 3L
+        result.getResponse().getContentAsString().split("\\.").length == 3
     }
 
     def "Should return error message when trying to log in with invalid user data"() {
@@ -83,7 +82,7 @@ class AuthenticationManagerTest extends Specification{
                       .andReturn()
     }
 
-    private UserDto produceUser(String username, String password) {
+    private static UserDto produceUser(String username, String password) {
         return new UserDto(username, password)
     }
 }

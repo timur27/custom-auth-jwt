@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class AuthUtil {
+public class AuthService {
     public ResponseEntity<String> performRegisterRequest(UserDto user) {
         return buildAndSendRequest(user, WorkflowHttpUrls.REGISTER);
     }
