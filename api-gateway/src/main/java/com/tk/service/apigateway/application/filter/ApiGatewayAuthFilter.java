@@ -1,38 +1,41 @@
 package com.tk.service.apigateway.application.filter;
 
+import com.tk.service.apigateway.ex.InvalidTokenException;
 import com.tk.service.apigateway.ex.TokenNotProvidedException;
 import com.tk.service.apigateway.util.jwt.JWTokenHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+import static com.tk.service.apigateway.application.WorkflowHttpUrls.*;
+
 @Service
 public class ApiGatewayAuthFilter extends HandlerInterceptorAdapter {
-    private static final String LOG_IN_PATH = "/login";
-    private static final String REGISTER_PATH = "/register";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiGatewayAuthFilter.class);
     private static final String PRIVATE_KEY = "privateKey";
-    private JWTokenHelper jwTokenHelper = JWTokenHelper.getInstance();
+    private static final String INVALID_TOKEN_MESSAGE = "JWT Token is expired or is incorrect";
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
-        if (req.getRequestURI().equals(LOG_IN_PATH) || req.getRequestURI().equals(REGISTER_PATH)) {
+        if (getEndpointsWithNoClaimNeeded().contains(req.getRequestURI())) {
             return true;
+        } else {
+            return claimToken(req.getHeader(PRIVATE_KEY));
         }
-
-        return claimToken(req, res, handler);
     }
 
-    private boolean claimToken(HttpServletRequest req, HttpServletResponse res, Object handler) {
-        String privateKeyHeaderValue = Optional.of(req.getHeader(PRIVATE_KEY))
+    private boolean claimToken(String privateKey) {
+        String privateKeyHeaderValue = Optional.of(privateKey)
                 .orElseThrow(() -> new TokenNotProvidedException("Token was not provided"));
         try {
-            jwTokenHelper.claimKey(privateKeyHeaderValue);
+            JWTokenHelper.claimKey(privateKeyHeaderValue);
         } catch (Exception ex) {
-            System.out.println("JWT Token is expired or is incorrect");
-            return false;
+            LOGGER.error(INVALID_TOKEN_MESSAGE);
+            throw new InvalidTokenException(INVALID_TOKEN_MESSAGE, ex);
         }
         return true;
     }

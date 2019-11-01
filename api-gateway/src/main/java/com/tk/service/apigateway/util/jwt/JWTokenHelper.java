@@ -6,20 +6,8 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
-public class JWTokenHelper {
-    private static JWTokenHelper jwTokenHelper = null;
-
-    public JWTokenHelper() {
-    }
-
-    public static JWTokenHelper getInstance() {
-        if (jwTokenHelper == null) {
-            return new JWTokenHelper();
-        }
-        return jwTokenHelper;
-    }
-
-    public void claimKey(String privateKey) throws ExpiredJwtException, MalformedJwtException {
+public final class JWTokenHelper {
+    public static void claimKey(String privateKey) throws ExpiredJwtException, MalformedJwtException {
         Jwts.parser()
                 .setSigningKey(Keys.secretKeyFor(SignatureAlgorithm.HS256))
                 .parseClaimsJws(privateKey);
