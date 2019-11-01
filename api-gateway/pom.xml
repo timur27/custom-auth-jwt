@@ -46,6 +46,11 @@
 			<version>0.10.7</version>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>r05</version>
+		</dependency>
 	</dependencies>
 
 	<build>
