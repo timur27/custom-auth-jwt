@@ -40,3 +40,6 @@ ui/tsconfig.spec.json
 ui/tsconfig.app.json
 ui/tslint.json
 ui/src/assets
+
+### logs ###
+app.log
