@@ -1,13 +1,12 @@
 package com.tk.service.authsystem.dto;
 
-import com.tk.service.authsystem.api.UserDto;
-import com.tk.service.authsystem.api.UserNotFoundException;
+import com.tk.service.donner.user.UserDto;
 
 import java.util.Optional;
 
 
 public class JpaUserRepository implements UserRepository {
-    SpringJpaUserRepository jpaUserRepository;
+    private final SpringJpaUserRepository jpaUserRepository;
 
     public JpaUserRepository(SpringJpaUserRepository jpaUserRepository) {
         this.jpaUserRepository = jpaUserRepository;
@@ -26,15 +25,5 @@ public class JpaUserRepository implements UserRepository {
     @Override
     public Optional<PersistedUser> getUserByUsername(String username) {
         return Optional.of(jpaUserRepository.getByUsername(username)).orElse(null);
-    }
-
-    @Override
-    public Optional<PersistedUser> getUserById(Long id) throws UserNotFoundException{
-        return Optional.of(jpaUserRepository.getById(id)).orElseThrow(UserNotFoundException::new);
-    }
-
-    @Override
-    public Optional<PersistedUser> getUserByUsernameAndPassword(UserDto user) {
-        return jpaUserRepository.getByUsernameAndPassword(user.getUsername(), user.getPassword());
     }
 }

@@ -16,7 +16,8 @@
 	<modules>
 		<module>auth-system</module>
 		<module>api-gateway</module>
-	</modules>
+        <module>user-transfer</module>
+    </modules>
 
 	<properties>
 		<java.version>1.8</java.version>

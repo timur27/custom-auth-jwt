@@ -1,8 +1,8 @@
 package com.tk.service.authsystem.dto;
 
 import com.google.common.collect.Maps;
-import com.tk.service.authsystem.api.UserDto;
 import com.tk.service.authsystem.api.UserNotFoundException;
+import com.tk.service.donner.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -36,15 +36,5 @@ public class TestUserRepository implements UserRepository {
             return Optional.of(UserWrapper.from(new UserDto(username, userMap.get(username))));
         }
         return Optional.empty();
-    }
-
-    @Override
-    public Optional<PersistedUser> getUserById(Long id) throws UserNotFoundException {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<PersistedUser> getUserByUsernameAndPassword(UserDto user) throws UserNotFoundException {
-        return getUserByUsername(user.getUsername());
     }
 }
