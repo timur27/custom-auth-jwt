@@ -1,6 +1,6 @@
 package com.tk.service.authsystem.dto;
 
-import com.tk.service.donner.user.UserDto;
+import com.tk.service.donner.dto.UserDto;
 
 import java.util.Optional;
 

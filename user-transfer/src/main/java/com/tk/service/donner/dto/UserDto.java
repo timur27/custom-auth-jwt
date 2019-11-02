@@ -1,4 +1,4 @@
-package com.tk.service.donner.user;
+package com.tk.service.donner.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
