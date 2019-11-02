@@ -9,7 +9,7 @@ public class WorkflowHttpUrls {
     public static final String REGISTER = "/register";
     public static final String LOGIN = "/login";
 
-    public static List<String> getEndpointsWithNoClaimNeeded () {
+    public static List<String> getEndpointsWithNoTokenNeeded() {
         return Lists.newArrayList(LOGIN, REGISTER);
     }
 }

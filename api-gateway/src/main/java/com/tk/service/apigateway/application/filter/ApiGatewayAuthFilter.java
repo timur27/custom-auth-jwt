@@ -21,7 +21,7 @@ public class ApiGatewayAuthFilter extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
-        if (getEndpointsWithNoClaimNeeded().contains(req.getRequestURI())) {
+        if (getEndpointsWithNoTokenNeeded().contains(req.getRequestURI())) {
             return true;
         } else {
             return claimToken(req.getHeader(PRIVATE_KEY));

@@ -18,7 +18,7 @@ public class AuthController  {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity login(@RequestBody UserDto user) {
-        return authService.performLoginUser(user);
+        return authService.performLoginRequest(user);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
