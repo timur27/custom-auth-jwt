@@ -2,7 +2,7 @@ package com.tk.service.apigateway.web.auth;
 
 
 import com.tk.service.apigateway.util.auth.AuthService;
-import com.tk.service.donner.user.UserDto;
+import com.tk.service.donner.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
