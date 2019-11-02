@@ -1,6 +1,6 @@
 package com.tk.service.authsystem.dto;
 
-import com.tk.service.authsystem.api.UserDto;
+import com.tk.service.donner.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

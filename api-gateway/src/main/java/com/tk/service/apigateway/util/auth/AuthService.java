@@ -1,7 +1,7 @@
 package com.tk.service.apigateway.util.auth;
 
-import com.tk.service.apigateway.api.UserDto;
 import com.tk.service.apigateway.ex.ResponseEntityErrorException;
+import com.tk.service.donner.user.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

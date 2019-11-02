@@ -1,6 +1,6 @@
 package com.tk.service.authsystem.dto;
 
-import com.tk.service.authsystem.api.UserDto;
+import com.tk.service.donner.user.UserDto;
 
 public class UserWrapper {
     public static UserDto from(PersistedUser user) {

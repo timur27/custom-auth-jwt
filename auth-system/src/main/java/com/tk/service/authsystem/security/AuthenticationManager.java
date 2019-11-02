@@ -1,8 +1,7 @@
 package com.tk.service.authsystem.security;
 
-import com.tk.service.authsystem.api.UserDto;
-import com.tk.service.authsystem.dto.Response;
 import com.tk.service.authsystem.dto.UserFacade;
+import com.tk.service.donner.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

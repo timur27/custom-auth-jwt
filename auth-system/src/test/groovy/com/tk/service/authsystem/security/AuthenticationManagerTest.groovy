@@ -1,7 +1,7 @@
 package com.tk.service.authsystem.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tk.service.authsystem.api.UserDto
+import com.tk.service.donner.user.UserDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
