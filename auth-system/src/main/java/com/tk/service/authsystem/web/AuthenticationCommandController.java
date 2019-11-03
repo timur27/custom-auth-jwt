@@ -21,13 +21,13 @@ public class AuthenticationCommandController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE
                                                                     , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> saveUser(@RequestBody UserDto user) {
+    public ResponseEntity saveUser(@RequestBody UserDto user) {
         return authenticationManager.registerUser(user);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE
                                                                  , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> loginUser(@RequestBody UserDto user) {
+    public ResponseEntity loginUser(@RequestBody UserDto user) {
         return authenticationManager.loginUser(user);
     }
 
