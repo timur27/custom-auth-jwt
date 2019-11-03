@@ -10,10 +10,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticationManager {
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private PasswordMatcher passwordMatcher;
-    private TokenProvider tokenProvider;
+
+    private static final String USR_ALREADY_EXIST_MSG = "User with provided data already exist";
+    private static final String USR_SUCCESSFULLY_CREATED_MSG = "User successfully created";
+    private static final String USR_INVALID_DATA_PROVIDED = "Provided user data is invalid";
+
     private UserFacade userFacade;
+    private TokenProvider tokenProvider;
+    private PasswordMatcher passwordMatcher;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public AuthenticationManager(BCryptPasswordEncoder bCryptPasswordEncoder, PasswordMatcher passwordMatcher, TokenProvider tokenProvider, UserFacade userFacade) {
@@ -23,17 +28,17 @@ public class AuthenticationManager {
         this.userFacade = userFacade;
     }
 
-    public ResponseEntity<String> registerUser(UserDto user) {
+    public ResponseEntity registerUser(UserDto user) {
         if (userFacade.userExists(user)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(USR_ALREADY_EXIST_MSG);
         }
         persistUser(user);
-        return ResponseEntity.ok("User successfully created");
+        return ResponseEntity.status(HttpStatus.CREATED).body(USR_SUCCESSFULLY_CREATED_MSG);
     }
 
-    public ResponseEntity<String> loginUser(UserDto user) {
+    public ResponseEntity loginUser(UserDto user) {
         if (!passwordMatcher.isPasswordValid(user.getUsername(), user.getPassword())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(USR_INVALID_DATA_PROVIDED);
         }
         return ResponseEntity.ok(tokenProvider.generateToken(user.getUsername(), user.getPassword()));
     }
