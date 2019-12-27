@@ -9,11 +9,11 @@ For new user register type:
 http://localhost:8081/register`
 
 
-For user login: 
-`curl --header "Content-Type: application/json" 
---request POST 
---data '{"username":"USERNAME","password":"PASSWORD"}' 
-http://localhost:8081/login`
+For user login:  
+`curl --header "Content-Type: application/json"  
+--request POST  
+--data '{"username":"USERNAME","password":"PASSWORD"}'  
+http://localhost:8081/login` 
 
 Possible HTTP server responses are:
 /register -> 201 CREATED - User successfully created
