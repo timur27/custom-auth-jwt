@@ -16,8 +16,8 @@ For user login:
 http://localhost:8081/login`   
     
 Possible HTTP server responses are:    
-/register -> 201 CREATED - User successfully created   
-          -> 409 CONFLICT - User with provided data already exist   
+* /register -> 201 CREATED - User successfully created   
+           -> 409 CONFLICT - User with provided data already exist   
              
-/login    -> 200 OK - message: JWT_TOKEN    
+* /login    -> 200 OK - message: JWT_TOKEN    
           -> 400 BAD REQUEST - Provided user data is invalid    
