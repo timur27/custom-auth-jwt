@@ -30,6 +30,4 @@ public class AuthenticationCommandController {
     public ResponseEntity loginUser(@RequestBody UserDto user) {
         return authenticationManager.loginUser(user);
     }
-
-
 }
