@@ -16,7 +16,6 @@
 	<modules>
 		<module>auth-system</module>
 		<module>api-gateway</module>
-        <module>user-transfer</module>
     </modules>
 
 	<properties>
