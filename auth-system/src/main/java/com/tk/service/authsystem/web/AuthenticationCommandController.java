@@ -1,7 +1,7 @@
 package com.tk.service.authsystem.web;
 
+import com.tk.service.authsystem.dto.UserDto;
 import com.tk.service.authsystem.security.AuthenticationManager;
-import com.tk.service.donner.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
