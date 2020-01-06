@@ -1,7 +1,7 @@
 package com.tk.service.apigateway.util.auth;
 
+import com.tk.service.apigateway.dto.UserDto;
 import com.tk.service.apigateway.ex.ApiResponse;
-import com.tk.service.donner.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;

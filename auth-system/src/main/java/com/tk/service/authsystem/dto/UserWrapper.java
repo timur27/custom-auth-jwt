@@ -1,7 +1,5 @@
 package com.tk.service.authsystem.dto;
 
-import com.tk.service.donner.dto.UserDto;
-
 public class UserWrapper {
     public static UserDto from(PersistedUser user) {
         return new UserDto(user.getUsername(), user.getPassword());
