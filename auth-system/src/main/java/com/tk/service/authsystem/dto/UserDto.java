@@ -1,7 +1,7 @@
-package com.tk.service.donner.dto;
+package com.tk.service.authsystem.dto;
 
-        import lombok.AllArgsConstructor;
-        import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor
